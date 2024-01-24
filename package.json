@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./src/index.js",
-    "start:dev": "nodemon ./src/index.js"
+    "start": "node ./src/v1/index.js",
+    "start:dev": "nodemon ./src/v1/index.js"
   },
   "keywords": [],
   "author": "Manjula Pradeep Jayathilaka",
@@ -14,6 +14,7 @@
   "dependencies": {
     "axios": "^1.6.5",
     "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",

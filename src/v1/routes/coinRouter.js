@@ -37,6 +37,49 @@ const coinController = require('../controllers/coinController');
  *     tags: [Coins]
  *     security:
  *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: vs_currency
+ *         description: The currency to compare against
+ *         required: false
+ *         schema:
+ *           type: string
+ *         example: USD
+ *       - in: query
+ *         name: order
+ *         description: The order of the list
+ *         required: false
+ *         schema:
+ *           type: string
+ *         example: market_cap_desc
+ *       - in: query
+ *         name: per_page
+ *         description: The number of items per page
+ *         required: false
+ *         schema:
+ *           type: string
+ *         example: 100
+ *       - in: query
+ *         name: page
+ *         description: The page number
+ *         required: false
+ *         schema:
+ *           type: integer
+ *         example: 1
+ *       - in: query
+ *         name: sparkline
+ *         description: Include sparkline data
+ *         required: false
+ *         schema:
+ *           type: boolean
+ *         example: true
+ *       - in: query
+ *         name: locale
+ *         description: The locale for the response
+ *         required: false
+ *         schema:
+ *           type: string
+ *         example: en
  *     responses:
  *       200:
  *         description: Successful response with a list of coin prices

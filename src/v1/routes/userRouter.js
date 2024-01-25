@@ -78,8 +78,6 @@ router.get('/', verifyUserToken, (req, res) => {
  *         description: Internal Server Error
  */
 
-
-
 router.post('/register', registerController);
 router.post('/login', loginController);
 

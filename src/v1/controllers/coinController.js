@@ -1,8 +1,8 @@
 const axios = require("axios");
+const cryptoService = require("../services/cryptoService");
 
 class CoinController {
   async getCoinList(req, res) {
-
     const url1 = `https://api.coingecko.com/api/v3/coins/list`;
     try {
       const response = await axios.get(url1);
@@ -18,20 +18,23 @@ class CoinController {
   }
 
   async getPriceList(req, res) {
-    const vs_currency = req.params.vs_currency || "usd";
-    const order = req.params.order || "market_cap_desc";
-    const per_page = req.params.per_page || "100";
-    const page = req.params.page || 1;
-    const sparkline = req.params.sparkline || false;
-    const locale = req.params.locale || "en";
-
-    const url = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${vs_currency}&order=${order}&per_page=${per_page}&page=${page}&sparkline=${sparkline}&locale=${locale}`;
+    const cryptos = req.body.cryptos || ["bitcoin", "ethereum", "ripple"];
+    const currency = req.body.currency || "USD";
+    const options = {
+      order: req.body.order || "market_cap_desc",
+      per_page: req.body.per_page || 100,
+      page: req.body.page || 1,
+      sparkline: req.body.sparkline || false,
+      locale: req.body.locale || "en",
+    };
 
     try {
-      const response = await axios.get(url);
-      const priceList = response.data;
-      res.status(200).json(priceList);
-
+      const prices = await cryptoService.getCryptoPrices(
+        cryptos,
+        currency,
+        options
+      );
+      res.status(200).json(prices);
     } catch (error) {
       console.error("Error fetching coin list:", error.message);
       res.status(500).json({

@@ -39,6 +39,13 @@ const coinController = require('../controllers/coinController');
  *       - bearerAuth: []
  *     parameters:
  *       - in: query
+ *         name: cryptos
+ *         description: The cripto currencies to user nedd to get
+ *         required: false
+ *         schema:
+ *           type: string
+ *         example: bitcoin,ethereum,ripple
+ *       - in: query
  *         name: vs_currency
  *         description: The currency to compare against
  *         required: false

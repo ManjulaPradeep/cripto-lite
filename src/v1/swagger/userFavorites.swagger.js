@@ -1,9 +1,3 @@
-const express = require("express");
-const router = express.Router();
-const userFavoritesController = require("../controllers/userFavoritesController");
-const extractUserFromToken = require("../middleware/extractUserJWT");
-
-
 /**
  * @swagger
  * tags:
@@ -17,7 +11,7 @@ const extractUserFromToken = require("../middleware/extractUserJWT");
  * @swagger
  * /api/v1/userFavorites/{user_id}:
  *   get:
- *     summary: Get user's favorite currencies (No need to provide user ID.API can indentify you via JWT)
+ *     summary: Get user's favorite currencies
  *     tags: [UserFavorites]
  *     security:
  *       - bearerAuth: []
@@ -25,7 +19,7 @@ const extractUserFromToken = require("../middleware/extractUserJWT");
  *       - in: path
  *         name: user_id
  *         description: User ID
- *         required: false
+ *         required: true
  *         schema:
  *           type: string
  *         example: 12345
@@ -124,11 +118,3 @@ const extractUserFromToken = require("../middleware/extractUserJWT");
  *       500:
  *         description: Internal Server Error
  */
-
-router.get("/:user_id", userFavoritesController.getUserFavorites);
-router.post("/create", userFavoritesController.createFavorites);
-router.put("/update", userFavoritesController.updateFavorites);
-router.delete("/delete", userFavoritesController.deleteFavorites);
-
-module.exports = router;
-

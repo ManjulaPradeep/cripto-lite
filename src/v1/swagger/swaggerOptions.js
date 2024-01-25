@@ -1,10 +1,3 @@
-// const options = {
-//     swaggerDefinition: require('./swaggerDefinition'),
-//     apis: ['./src/v1/routes/*.js'],
-//   };
-  
-//   module.exports = options;
-
 const options = {
   swaggerDefinition: require('./swaggerDefinition'),
   apis: ['./src/v1/routes/*.js'],

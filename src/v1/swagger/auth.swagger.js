@@ -1,15 +1,3 @@
-const express = require('express');
-const router = express.Router();
-const registerController = require('../controllers/auth/registerController');
-const loginController = require('../controllers/auth/loginController');
-const { verifyUserToken } = require('../middleware/authMiddleware');
-
-// only for test the JWT token is successfully verified.
-const users = [{users: 'This is a test only !', messge: 'Your JWT is successfully verified.'}];
-router.get('/', verifyUserToken, (req, res) => {
-  res.json(users);
-});
-
 
 /**
  * @swagger
@@ -77,11 +65,3 @@ router.get('/', verifyUserToken, (req, res) => {
  *       500:
  *         description: Internal Server Error
  */
-
-
-
-router.post('/register', registerController);
-router.post('/login', loginController);
-
-module.exports = router;
-

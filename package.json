@@ -8,7 +8,6 @@
     "start": "cross-env NODE_ENV=production node ./src/v1/index.js",
     "start:dev": "cross-env NODE_ENV=development nodemon ./src/v1/index.js",
     "start:test": "cross-env NODE_ENV=test node ./src/v1/index.js"
-
   },
   "keywords": [],
   "author": "Manjula Pradeep Jayathilake",
@@ -29,7 +28,8 @@
     "sinon": "^17.0.1",
     "supertest": "^6.3.4",
     "swagger-jsdoc": "^6.2.8",
-    "swagger-ui-express": "^5.0.0"
+    "swagger-ui-express": "^5.0.0",
+    "ws": "^8.16.0"
   },
   "devDependencies": {
     "jest": "^29.7.0"

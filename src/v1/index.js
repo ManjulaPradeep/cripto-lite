@@ -1,50 +1,96 @@
-require('dotenv').config();
-const express = require('express');
-const mysql = require('mysql2');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const axios = require('axios');
-const userRouter = require('./routes/userRouter');
-const coinRouter = require('./routes/coinRouter');
-const userFavoritesRouter = require('./routes/userFavoritesRouter');
-const { verifyUserToken } = require('./middleware/authMiddleware');
-const swaggerJsdoc = require('swagger-jsdoc');
-const swaggerUi = require('swagger-ui-express');
-const swaggerOptions = require('../v1/swagger/swaggerOptions');
-const config = require('../v1/config/config');
+require("dotenv").config();
+const express = require("express");
+const mysql = require("mysql2");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const axios = require("axios");
+const userRouter = require("./routes/userRouter");
+const coinRouter = require("./routes/coinRouter");
+const userFavoritesRouter = require("./routes/userFavoritesRouter");
+const { verifyUserToken } = require("./middleware/authMiddleware");
+const swaggerJsdoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
+const swaggerOptions = require("../v1/swagger/swaggerOptions");
+const config = require("../v1/config/config");
+const http = require("http");
 
+// const WebSocket = require("ws");
+// const fs = require("fs");
+// const path = require("path");
 
 const app = express();
 const port = config.PORT || 3000;
-// const port = process.env.PORT || 3000;
 
-app.get('/',(req,res) => {
-    const responseMessage = 'index.js is running....<br>API Documentation - <a href="http://localhost:3000/api-docs/">http://localhost:3000/api-docs/</a>';
-    res.send(responseMessage);
+app.get("/", (req, res) => {
+  const responseMessage = 'index.js is running....<br>API Documentation - <a href="http://localhost:3000/api-docs/">http://localhost:3000/api-docs/</a>';
+  res.send(responseMessage);
+
 });
 
 app.use(bodyParser.json());
 app.use(cors());
 
+// // WebSocket handling
+// const server = http.createServer(app);
+// const wss = new WebSocket.Server({ server, path: "/cryptoprices" });
+// const clients = new Set();
+
+// function broadcastPrices(prices) {
+//   const serializedPrices = JSON.stringify(prices);
+//   clients.forEach((client) => {
+//     if (client.readyState === WebSocket.OPEN) {
+//       client.send(serializedPrices);
+//     }
+//   });
+// }
+
+// wss.on("connection", (ws) => {
+//   clients.add(ws);
+//   ws.on("message", (message) => {
+//     console.log(`Received message: ${message}`);
+//   });
+//   ws.on("close", () => {
+//     clients.delete(ws);
+//   });
+// });
+
 // // Swagger API documentation
 // // http://localhost:3000/api-docs/
 // Initialize Swagger-jsdoc
 const specs = swaggerJsdoc(swaggerOptions);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
-
-app.use('/api/v1/users',userRouter);
-app.use('/api/v1/coins',verifyUserToken,coinRouter);
-app.use('/api/v1/userFavorites',verifyUserToken,userFavoritesRouter);
+app.use("/api/v1/users", userRouter);
+app.use("/api/v1/coins", verifyUserToken, coinRouter);
+app.use("/api/v1/userFavorites", verifyUserToken, userFavoritesRouter);
 
 app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).send(`Error: ${err.message}`);
-  });
-  
-
-app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
+  console.error(err.stack);
+  res.status(500).send(`Error: ${err.message}`);
 });
 
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
+});
 
+// // Fetch and broadcast prices every 5 seconds
+// async function fetchAndBroadcastPrices() {
+//     try {
+//         const cryptos = ['bitcoin', 'ethereum', 'ripple'];
+//         const currency = 'USD';
+//         const options = {
+//             order: 'market_cap_desc',
+//             per_page: 100,
+//             page: 1,
+//             sparkline: false,
+//             locale: 'en',
+//         };
+
+//         const prices = await cryptoService.getCryptoPrices(cryptos, currency, options);
+//         broadcastPrices(prices);
+//     } catch (error) {
+//         console.error('Error fetching and broadcasting prices:', error.message);
+//     }
+// }
+
+// setInterval(fetchAndBroadcastPrices, 300000);

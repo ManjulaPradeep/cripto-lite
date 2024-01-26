@@ -45,4 +45,6 @@ const environment = process.env.NODE_ENV || 'development';
 // Combine common configurations with environment-specific configurations
 const config = { ...commonConfig, ...environmentConfig[environment] };
 
+console.log(`Starting environment : ${environment}`);
+
 module.exports = config;

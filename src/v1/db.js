@@ -14,8 +14,8 @@ const dbConfig = {
   };
 
 const pool = mysql.createPool(dbConfig);
+console.log(`Environment: ${process.env.NODE_ENV}`);
 console.log(`Connecting to database: ${process.env.DB_NAME}`);
-console.log(`DB_NAME: ${process.env.DB_NAME}`);
 console.log(`Created database pool`);
 
 module.exports = pool;

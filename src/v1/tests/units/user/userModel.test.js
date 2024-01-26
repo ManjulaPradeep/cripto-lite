@@ -1,11 +1,11 @@
 // userModel.test.js
 
 const bcrypt = require("bcryptjs");
-const userModel = require('../../../models/userModel');
-const pool = require('../../../db');
+const userModel = require("../../../models/userModel");
+const pool = require("../../../db");
 
 // Mock the pool module to avoid actual database interactions during testing
-jest.mock('../../../db');
+jest.mock("../../../db");
 
 describe("userModel Tests", () => {
   afterEach(() => {
@@ -44,7 +44,10 @@ describe("userModel Tests", () => {
 
     it("throws an error if the email is already registered", async () => {
       // Mock the getUserByEmail function to return a user, indicating the email is already registered
-      userModel.getUserByEmail = jest.fn(() => ({ id: 1, email: "test@example.com" }));
+      userModel.getUserByEmail = jest.fn(() => ({
+        id: 1,
+        email: "test@example.com",
+      }));
 
       const email = "test@example.com";
       const password = "password123";

@@ -11,13 +11,16 @@ const { verifyUserToken } = require('./middleware/authMiddleware');
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 const swaggerOptions = require('../v1/swagger/swaggerOptions');
+const config = require('../v1/config/config');
 
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = config.PORT || 3000;
+// const port = process.env.PORT || 3000;
 
 app.get('/',(req,res) => {
-    res.send('index js is running....');
+    const responseMessage = 'index.js is running....<br>API Documentation - <a href="http://localhost:3000/api-docs/">http://localhost:3000/api-docs/</a>';
+    res.send(responseMessage);
 });
 
 app.use(bodyParser.json());

@@ -1,75 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Crypto Prices</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    #coinList {
-      max-width: 400px;
-      margin-bottom: 20px;
-    }
+    <!-- Bootstrap CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
 
-    #prices {
-      max-width: 800px;
-    }
-  </style>
-</head>
-<body>
-  <h1>Crypto Prices</h1>
+    <link rel="shortcut icon" href="#">
 
-  <div id="coinList">
-    <h2>Coin List</h2>
-    <ul id="coinListItems"></ul>
-  </div>
+    <title>Crypto Prices</title>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row text-center">
+        <h1 class="text-danger">Crypto Lite</h1>
+        <p>Crypto Currency Price Tracker</p>
+      </div>
 
-  <div id="prices">
-    <h2>Real-time Prices</h2>
-    <ul id="priceList"></ul>
-  </div>
+      <div class="row mt-3">
+        <span
+          >API Documentation -
+          <a href="http://localhost:3000/api-docs/"
+            >http://localhost:3000/api-docs/</a
+          >
+        </span>
+      </div>
 
-  <script>
-    const coinListItems = document.getElementById('coinListItems');
-    const priceList = document.getElementById('priceList');
+      <div class="row">
+        <span
+          >Powered by -
+          <a href="https://www.coingecko.com/en/api">CoinGecko API</a>
+        </span>
+      </div>
 
-    // Connect to WebSocket
-    const socket = new WebSocket('ws://localhost:3000/cryptoprices');
+      <div class="row mt-5">
+        <h3 class="text-primary">Coin List</h3>
+      </div>
 
-    socket.addEventListener('message', (event) => {
-      const data = JSON.parse(event.data);
-      updatePrices(data);
-    });
+      <div
+        id="coinList"
+        class="row border border-primary mt-3"
+        style="max-height: 40vh; overflow-y: auto"
+      >
+        <table
+          class="table table-responsive"
+          style="max-height: 40vh; overflow-y: auto"
+        >
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Symbol</th>
+              <th scope="col">Name</th>
+            </tr>
+          </thead>
+          <tbody id="coinListBody"></tbody>
+        </table>
+      </div>
 
-    async function updatePrices(prices) {
-      priceList.innerHTML = '';
-      prices.forEach((crypto) => {
-        const listItem = document.createElement('li');
-        listItem.textContent = `${crypto.name}: ${crypto.price} ${crypto.currency}`;
-        priceList.appendChild(listItem);
+      <div class="row mt-5">
+        <h3 class="text-primary">Real-time Prices</h3>
+      </div>
+
+      <div id="prices" class="ow mt-3">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Price</th>
+              <th scope="col">Currency</th>
+            </tr>
+          </thead>
+          <tbody id="priceListBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <script>
+      const coinListBody = document.getElementById("coinListBody");
+      const priceListBody = document.getElementById("priceListBody");
+
+      // Connect to WebSocket
+      const socket = new WebSocket("ws://localhost:3000/cryptoprices");
+      console.log(socket);
+
+      socket.addEventListener("message", (event) => {
+        const data = JSON.parse(event.data);
+        updatePrices(data);
       });
-    }
 
-    async function getCoinList() {
-      try {
-        const response = await fetch('http://localhost:3000/api/v1/coins/coinList');
-        const coinList = await response.json();
-
-        coinList.forEach((coin) => {
-          const listItem = document.createElement('li');
-          listItem.textContent = coin.name;
-          coinListItems.appendChild(listItem);
+      async function updatePrices(prices) {
+        priceListBody.innerHTML = "";
+        prices.forEach((crypto) => {
+          const row = priceListBody.insertRow();
+          row.insertCell(0).textContent = crypto.name;
+          row.insertCell(1).textContent = crypto.current_price;
+          row.insertCell(2).textContent = crypto.currency;
         });
-      } catch (error) {
-        console.error('Error fetching coin list:', error.message);
       }
-    }
 
-    getCoinList();
-  </script>
-</body>
+      async function getCoinList() {
+        try {
+          const response = await fetch(
+            "http://localhost:3000/api/v1/coins/coinList"
+          );
+          let coinList = await response.json();
+          if(!coinList){
+            console.log("Coin list not received.")
+          }
+
+
+          // Order the rows by "market_cap_rank"
+          coinList.sort((a, b) => a.market_cap_rank - b.market_cap_rank);
+
+          coinList.forEach((coin) => {
+            const row = coinListBody.insertRow();
+            row.insertCell(0).textContent = coin.id;
+            row.insertCell(1).textContent = coin.symbol;
+            row.insertCell(2).textContent = coin.name;
+          });
+        } catch (error) {
+          console.error("Error fetching coin list:", error.message);
+        }
+      }
+
+      getCoinList();
+    </script>
+    <!-- Bootstrap JS CDN -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>

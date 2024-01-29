@@ -32,6 +32,7 @@ app.use(cors());
 // WebSocket handling
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server, path: "/cryptoprices" });
+perMessageDeflate: false;
 const clients = new Set();
 
 function broadcastPrices(prices) {

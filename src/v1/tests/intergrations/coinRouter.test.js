@@ -9,7 +9,6 @@ describe('Coin Routes Integration Tests', () => {
       .get('/api/v1/coins/coinList');
 
     expect(response.status).toBe(200);
-    // additional assertions 
   });
 
   it('should get the price list', async () => {
@@ -17,6 +16,5 @@ describe('Coin Routes Integration Tests', () => {
       .get('/api/v1/coins/priceList');
 
     expect(response.status).toBe(200);
-    // additional assertions 
   });
 });

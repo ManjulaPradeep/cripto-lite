@@ -87,7 +87,12 @@
 
       // Connect to WebSocket
       const socket = new WebSocket("ws://localhost:3000/cryptoprices");
-      console.log(socket);
+      if(socket){
+        console.log(socket);
+      }
+      else{
+        console.log("Could not connect to the web socket !");
+      }
 
       socket.addEventListener("message", (event) => {
         const data = JSON.parse(event.data);

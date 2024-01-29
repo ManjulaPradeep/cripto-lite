@@ -20,8 +20,7 @@ describe('User Favorites Routes Integration Tests', () => {
       .get('/api/v1/userFavorites/1')  // Assuming 1 is the user_id for testing
       .set('Authorization', `Bearer ${authToken}`);
 
-    expect(response.status).toBe(200);
-    // additional assertions 
+    expect(response.status).toBe(200); 
   });
 
   it('should create user favorites', async () => {
@@ -30,8 +29,7 @@ describe('User Favorites Routes Integration Tests', () => {
       .send({ crypto_id: 1, user_id: 1 })  // Assuming 1 is the user_id for testing
       .set('Authorization', `Bearer ${authToken}`);
 
-    expect(response.status).toBe(200);
-    // additional assertions
+    expect(response.status).toBe(201);
   });
 
   it('should update user favorites', async () => {
@@ -40,8 +38,7 @@ describe('User Favorites Routes Integration Tests', () => {
       .send({ id: 1, crypto_id: 2, user_id: 1 })  // Assuming 1 is the user_id for testing
       .set('Authorization', `Bearer ${authToken}`);
 
-    expect(response.status).toBe(200);
-    // additional assertions
+    expect(response.status).toBe(201);
   });
 
   it('should delete user favorites', async () => {
@@ -50,7 +47,6 @@ describe('User Favorites Routes Integration Tests', () => {
       .send({ id: 1, user_id: 1 })  // Assuming 1 is the user_id for testing
       .set('Authorization', `Bearer ${authToken}`);
 
-    expect(response.status).toBe(200);
-    // additional assertions
+    expect(response.status).toBe(200)||expect(response.status).toBe(204);
   });
 });

@@ -1,8 +1,3 @@
-// require('dotenv').config();
-
-// module.exports = {
-//   jwtSecret: process.env.JWT_SECRET,
-// };
 require('dotenv').config();
 
 const commonConfig = {

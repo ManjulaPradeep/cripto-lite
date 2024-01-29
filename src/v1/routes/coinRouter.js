@@ -27,7 +27,7 @@ const coinController = require('../controllers/coinController');
  *       500:
  *         description: Internal Server Error
  */
-// router.get('/coinList', coinController.getCoinList);
+
 
 /**
  * @swagger
@@ -95,7 +95,6 @@ const coinController = require('../controllers/coinController');
  *       500:
  *         description: Internal Server Error
  */
-// router.get('/priceList', coinController.getPriceList);
 router.get('/coinList', coinController.getCoinList);
 router.get('/priceList', coinController.getPriceList);
 

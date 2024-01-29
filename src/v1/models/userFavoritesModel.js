@@ -1,10 +1,7 @@
 const pool = require('../db');
 
 class UserFavoritesModel{
-    // async getAllFavorites(){
-    //     const [rows] = await pool.query('SELECT * FROM user_favorites');
-    //     return rows;
-    // }
+
     async getUserFavorites(user_id){
         const [rows] = await pool.query('SELECT * FROM user_favorites WHERE user_id=?',[user_id]);
         return [rows];

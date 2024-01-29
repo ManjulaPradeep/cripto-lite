@@ -9,20 +9,12 @@
 
 /**
  * @swagger
- * /api/v1/userFavorites/{user_id}:
+ * /api/v1/userFavorites/:
  *   get:
  *     summary: Get user's favorite currencies
  *     tags: [UserFavorites]
  *     security:
  *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: user_id
- *         description: User ID
- *         required: true
- *         schema:
- *           type: string
- *         example: 12345
  *     responses:
  *       200:
  *         description: User favorites retrieved successfully

@@ -1,4 +1,4 @@
-# cripto-lite
+# Cripto-Lite
 This application provides real time Cryptocurrency prices.
 Developed by Express.js, Axios, JWT, WebSocket, Swagger Documentation,Jest Testing and MySQL.
 
@@ -12,7 +12,7 @@ Developed by Express.js, Axios, JWT, WebSocket, Swagger Documentation,Jest Testi
 4. Open the terminal and type 'npm run start:dev' command for start the application in development mode.
    To run tests use 'npm run start:test' command and 'npm test' for run the tests.
 
-5. Application runs on http://localhost:3000.You can access API documentation by
+5. Application runs on http://localhost:3000. You can access API documentation by
    http://localhost:3000/api-docs/.
 
 6. Find the 'Register API' and do register by providing email and password.

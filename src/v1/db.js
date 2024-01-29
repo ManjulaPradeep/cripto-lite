@@ -14,8 +14,19 @@ const dbConfig = {
   };
 
 const pool = mysql.createPool(dbConfig);
-console.log(`Environment: ${process.env.NODE_ENV}`);
-console.log(`Connecting to database: ${process.env.DB_NAME}`);
-console.log(`Created database pool`);
+
+(async () => {
+  try {
+    const connection = await pool.getConnection();
+    console.log(`Connected to database: ${process.env.DB_NAME}`);
+    connection.release();
+
+  } catch (error) {
+    console.error(`Error connecting to database: ${process.env.DB_NAME}`);
+    console.error(error.message);
+  }
+})();
+
+
 
 module.exports = pool;
